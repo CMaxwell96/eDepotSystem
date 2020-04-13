@@ -26,6 +26,10 @@ public Date getEndDate() {
 public void setEndDate(Date endDate) {
 	this.endDate = endDate;
 }
-
-
+public String toString(){
+	return this.getClass().getSimpleName() + " >> " +
+			client + " " +
+			client.toString()+" " +
+			startDate.format(DateTimeFormatter.ofPattern("dd MM yy HH:mm"));
+}
 }
