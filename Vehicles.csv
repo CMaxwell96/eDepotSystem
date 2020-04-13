@@ -1,0 +1,10 @@
+vehicleType,regNo.,make,model,weight,cargoCapacity,liquidCapacity,liquidType
+Truck,LT5 F12E,MercedesBenz,2019,4tn,"14,969 kg",N/A,N/A
+Tanker,KE2 JDJ2,AWD,2019,5tn,N/A,"11,600gallons",chemical
+Truck,UK2 SH82,MercedesBenz,2019,4tn,"14,969 kg",N/A,N/A
+Truck,OD6 QU2R,MercedesBenz,2020,5tn,"15,250 kg",N/A,N/A
+Tanker,S61 YWT5,AWD,2019,5tn,N/A,"11,600gallons",oil
+Truck,JS6 S7HJ,MercedesBenz,2020,5tn,"15,250kg",N/A,N/A
+Tanker,SUY 6A5G,AWD,2019,5tn,N/A,"11,600gallons",chemical
+Tanker,K9W 88JW,AWD,2020,6tn,N/A,"12,000gallons",oil
+Tanker,JWU U28J,AWD,2020,6tn,N/A,"12,000gallons",chemical
