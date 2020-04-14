@@ -1,13 +1,13 @@
-DepotName,Location,regNo,DriverID,DepotID
-HomeDepot,Liverpool,LT5 F12E,101,1
-HomeDepot,Liverpool,KE2 JDJ2,102,1
-HomeDepot,Liverpool,UK2 SH82,103,1
-HomeDepot,Liverpool,OD6 QU2R,104,1
-HomeDepot,Liverpool,S61 YWT5,105,1
-AwayDepot,Manchester,JS6 S7HJ,106,2
-AwayDepot,Manchester,SUY 6A5G,107,2
-AwayDepot,Manchester,K9W 88JW,108,2
-AwayDepot,Manchester,JWU U28J,109,2
-TopedDepot,London,SUY 6A5G,110,3
-TopedDepot,London,K9W 88JW,111,3
-TopedDepot,London,JWU U28J,112,3
+DepotName,Location,DriverID,DepotID,make,model,weight,regNo
+HomeDepot,Liverpool,101,1,volvo,volvo,7,LT5 F12E
+HomeDepot,Liverpool,102,1,volvo,volvo,7,KE2 JDJ2
+HomeDepot,Liverpool,103,1,volvo,volvo,7,UK2 SH82
+HomeDepot,Liverpool,104,1,volvo,volvo,7,OD6 QU2R
+HomeDepot,Liverpool,105,1,volvo,volvo,7,S61 YWT5
+AwayDepot,Manchester,106,2,volvo,volvo,7,JS6 S7HJ
+AwayDepot,Manchester,107,2,volvo,volvo,7,SUY 6A5G
+AwayDepot,Manchester,108,2,volvo,volvo,7,K9W 88JW
+AwayDepot,Manchester,109,2,volvo,volvo,7,JWU U28J
+TopedDepot,London,110,3,volvo,volvo,7,SUY 6A5G
+TopedDepot,London,111,3,volvo,volvo,7,K9W 88JW
+TopedDepot,London,112,3,volvo,volvo,7,JWU U28J
