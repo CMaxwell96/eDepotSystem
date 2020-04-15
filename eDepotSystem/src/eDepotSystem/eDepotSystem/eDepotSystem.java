@@ -1,12 +1,21 @@
 package eDepotSystem;
 
 import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import eDepotSystem.Vehicle;
+import eDepotSystem.Driver;
 
 public class eDepotSystem {
 	static Scanner scan = new Scanner(System.in);
 	static int inputNumber;
-	private List<Depot> depots = new ArrayList<Depot>();
-	private Depot depot;
+	private static List<Depot> depots = new ArrayList<Depot>();
+	private static List<WorkSchedule> jobs = new ArrayList<WorkSchedule>();
+	private static List<Driver> drivers = new ArrayList<Driver>();
+	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
+	private static Depot depot;
 	
 	public static void main(String[] args) {
 		
@@ -59,36 +68,36 @@ public class eDepotSystem {
 		
 		}
 	
-	private void getDepotByName() {
+	private static void getDepotByName() {
 		System.out.println("Enter Depots Name : ");
 		String depotName = scan.nextLine();
 		
-		System.out.printl n(depots.getDepotByName(depotName).toString());
+		System.out.println(Depot.getDepotByName(depotName).toString());
 	}
 	
-	private void getJobRef() {
+	private static void getJobRef() {
 		System.out.println("Enter Job Ref number : ");
 		String jobRef = scan.nextLine();
 		
-		System.out.println(depots.getJobRef(jobRef).toString());
+		System.out.println(WorkSchedule.getJobRef(jobRef).toString());
 	}
-	private void getDriverByID() {
+	private static void getDriverByID() {
 		System.out.println("Enter Drivers ID : ");
 		String driverID = scan.nextLine();
 		
-		System.out.println(depots.getDriverByID(driverID).toString());
+		System.out.println(Driver.getDriverByID(driverID).toString());
 	}
-	private void getVehicleByReg() {
+	private static  void getVehicleByReg() {
 		System.out.println("Enter Vehicle Reg : ");
 		String vehicleReg = scan.nextLine();
 		
-		System.out.println(depots.getVehicleByReg(vehicleReg).toString());
+		System.out.println(Vehicle.getVehicleByRegNo(vehicleReg).toString());
 	}
 	
 	
-	private void makeJob() {
+	private static void makeJob() {
 		System.out.println("Enter the new Job Ref No. : ");
-		String ref = scan.nextLine();
+		String jobRef = scan.nextLine();
 		
 		System.out.println("Enter the Depots Name : ");
 		String depotName = scan.nextLine();
@@ -99,24 +108,24 @@ public class eDepotSystem {
 		System.out.println("Enter the Vehicle RegNo.: ");
 		String vehicleReg = scan.nextLine();
 		
-		Job jobs = depots.getJobRef(ref);
-		Depot depots = depots.getDepotByName(depotName);
-		Driver drivers = depots.getDriverByID(driverID);
-		Vehicle vehicles = depots.getVehicleByReg(vehicleReg);
+		WorkSchedule jobs = WorkSchedule.getJobRef(jobRef);
+		Depot depots = Depot.getDepotByName(depotName);
+		Driver drivers = Driver.getDriverByID(driverID);
+		Vehicle vehicles = Vehicle.getVehicleByRegNo(vehicleReg);
 		
 		System.out.println("Enter the Job's creation date (d mm yy HH:mm:");
 		LocalDateTime jobStartDate = LocalDateTime.parse(scan.nextLine(), DateTimeFormatter.ofPattern("dd MM yy HH:mm"));
 		
-		depots.makeJob(new Job(ref, depotName, driverID, vehicleReg, jobStartDate));
+		depots.makeJob(new WorkSchedule(jobRef, depotName, driverID, vehicleReg, jobStartDate));
 		
 	
 	}
-	private void getNextJob() {
-		System.out.println("Enter the Depot Name to see the next booking : ");
+	private static void getNextJob() {
+		System.out.println("Enter the Depot Name to see the next job date: ");
 		String depotName = scan.nextLine();
 	 
 		
-		System.out.println(depots.getDepotByName(depotName).getNextJob().getJobDateTime().format(DateTimeFormatter.ofPattern("dd MM yy HH:mm")));)
+		System.out.println(Depot.getDepotByName(depotName).getNextJob().getJobStartDate().format(DateTimeFormatter.ofPattern("dd MM yy HH:mm")));
 		
 		
 	}

@@ -1,5 +1,10 @@
 package eDepotSystem;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class Vehicle {
 	
 	//instance fields
@@ -10,7 +15,9 @@ public class Vehicle {
 	public String RegNo;
 	public static boolean IsAvailable;
 	
-	protected List<Job> jobs = new ArrayList<Job>();
+	protected List<WorkSchedule> jobs = new ArrayList<WorkSchedule>();
+	private static List<Vehicle> vehicles = new ArrayList<Vehicle>();
+
 	
 	public Vehicle (String make,String model, int weight, String RegNo) {
 		this.make = make;
@@ -40,18 +47,29 @@ public class Vehicle {
 		
 	}
 	
-	public void makeJob(Job jobDateTime) {
+	public void makeJob(WorkSchedule jobDateTime) {
 		jobs.add(jobDateTime);
 		
 	}
-	
-	public Job getNextJob() {
+
+	public static Vehicle getVehicleByRegNo(String regno) {
 		
-		jobs.sort(Comparator.comparing(o -> o.getStartDate()));
-		
-		return jobs.stream().filter(o -> o.getStartDate().isAfter(LocalDateTime.now())).findFirst().get();
-		
-	}
+		for (Vehicle v : vehicles) {
+			if (v.getRegNo().equals(regno)){
+				return v;
+				
+			}
+			}
+		//if no match
+		return null;
+}
+//	public WorkSchedule getNextJob() {
+//		
+//		jobs.sort(Comparator.comparing(o -> o.getStartDate()));
+//		
+//		return jobs.stream().filter(o -> o.getStartDate().isAfter(LocalDateTime.now())).findFirst().get();
+//		
+//	}
 
 	
 
