@@ -1,35 +1,53 @@
 package eDepotSystem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 public class WorkSchedule {
+	
+	private String Client;
+	private String startDate;
+	private String EndDate;
+	
+	public WorkSchedule(String Client, String startDate, String EndDate) {
+		this.Client = Client;
+		this.startDate = startDate;
+		this.EndDate = EndDate;
+		
+		
+	}
+	
+	
 
-private String client;
-private Date startDate;
-private Date endDate;
+	public String getClient() {
+		return Client;
+	}
 
-public String getClient() {
-	return client;
-}
-public void setClient(String client) {
-	this.client = client;
-}
-public Date getStartDate() {
-	return startDate;
-}
-public void setStartDate(Date startDate) {
-	this.startDate = startDate;
-}
-public Date getEndDate() {
-	return endDate;
-}
-public void setEndDate(Date endDate) {
-	this.endDate = endDate;
-}
-public String toString(){
-	return this.getClass().getSimpleName() + " >> " +
-			client + " " +
-			client.toString()+" " +
-			startDate.format(DateTimeFormatter.ofPattern("dd MM yy HH:mm"));
-}
-}
+	public void setClient(String client) {
+		Client = client;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return EndDate;
+	}
+
+	public void setEndDate(String endDate) {
+		EndDate = endDate;
+	}
+	}
+
+
+
