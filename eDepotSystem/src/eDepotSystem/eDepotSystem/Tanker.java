@@ -1,7 +1,9 @@
  package eDepotSystem;
 
 public class Tanker extends Vehicle{
-	
+	public enum liquidType{
+		OIL, CHEMICAL;
+	}
 	public Tanker(String make, String model, int weight, String RegNo, int liquidCapacity, String liquidType) {
 		super(make, model, weight, RegNo);
 		// TODO Auto-generated constructor stub

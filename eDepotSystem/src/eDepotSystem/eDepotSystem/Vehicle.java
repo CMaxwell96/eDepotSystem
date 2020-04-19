@@ -1,19 +1,19 @@
 package eDepotSystem;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Vehicle {
-	
-	//instance fields
+public class Vehicle implements Scheduleable {
 	
 	public String make;
 	public String model;
 	public int weight;
 	public String RegNo;
-	public static boolean IsAvailable;
+	protected Boolean update = false;
 	
 	protected List<WorkSchedule> jobs = new ArrayList<WorkSchedule>();
 	private static List<Vehicle> vehicles = new ArrayList<Vehicle>();
@@ -63,14 +63,39 @@ public class Vehicle {
 		//if no match
 		return null;
 }
-//	public WorkSchedule getNextJob() {
-//		
-//		jobs.sort(Comparator.comparing(o -> o.getStartDate()));
-//		
-//		return jobs.stream().filter(o -> o.getStartDate().isAfter(LocalDateTime.now())).findFirst().get();
-//		
-//	}
+	public WorkSchedule getNextJob() {
+		
+		jobs.sort(Comparator.comparing(o -> o.getStartDate()));
+		
+		return jobs.stream().filter(o -> o.getStartDate().isAfter(LocalDateTime.now())).findFirst().get();
+		
+	}
 
 	
+	public Boolean isAvailable(LocalDateTime startDate, LocalDateTime endDate) {
+		for (WorkSchedule j : jobs) {
+			if ((j.getStartDate().isBefore(startDate))&&(j.getEndDate().isAfter(startDate))) {
+				return false;
+		}
+			
+		if ((j.getStartDate().isBefore(endDate))&&(j.getEndDate().isAfter(endDate))) {
+		return false;
+		}
+		
+		if ((j.getStartDate().isAfter(startDate))&&(j.getEndDate().isBefore(endDate)))
+			return false;
+		}
+		return update;
+	}
 
+	public void addSchedule(WorkSchedule jobs) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<WorkSchedule> getSchedule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
