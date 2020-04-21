@@ -28,11 +28,14 @@ public class eDepotSystem {
 	
 	public static void main(String[] args) {
 		deSerialize();
-		depots.add(new Depot("Home Depot"));
-		depots.add(new Depot("Away Depot"));
+		depots.add(new Depot("London"));
+		depots.add(new Depot("Manchester"));
+		depots.add(new Depot("Liverpool"));
 		displayMenu();
 
-		Driver driver1 = new Driver(001, "caolan", "password");
+		Driver driver1 = new Driver(001, "caolan", "_caolan");
+		Driver driver2 = new Driver(002, "curtis", "_curtis");
+		Driver driver3 = new Driver(003, "connor", "_connor");
 		
 		Vehicle vehicle1 = new Vehicle("Mercadecs", "2020", 5000, "NRG 2KI2");
 		
@@ -57,7 +60,7 @@ public class eDepotSystem {
 				String[] splits = scan2.nextLine().split(".");
 				
 				if (splits[0].equals(depot.getLocation())) {
-					depot.getVehicles().addAll((Collection<? extends Depot>) new Truck(splits[1], splits[2], Integer.valueOf(splits[3]), splits[4], Integer.valueOf(splits[5])));
+					depot.getVehicles().add( new Truck(splits[1], splits[2], Integer.valueOf(splits[3]), splits[4], Integer.valueOf(splits[5])));
 				}
 			}
 		}
@@ -69,7 +72,7 @@ public class eDepotSystem {
 				String[] splits2 = scan2.nextLine().split(".");
 				
 				if (splits2[0].equals(depot.getLocation())) {
-					depot.getVehicles().addAll((Collection<? extends Depot>) new Tanker(splits2[1], splits2[2], Integer.valueOf(splits2[3]), splits2[4], Integer.valueOf(splits2[5]), splits2[6]));
+					depot.getVehicles().add( new Tanker(splits2[1], splits2[2], Integer.valueOf(splits2[3]), splits2[4], Integer.valueOf(splits2[5]), splits2[6]));
 				}
 			}
 		}
@@ -141,15 +144,6 @@ public class eDepotSystem {
 //		
 //	}
 
-	private static Depot getDepotByLocation(String location) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private static void displayDepots() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	private static void displayMenu() {
 //		logOn();
@@ -157,7 +151,7 @@ public class eDepotSystem {
 		while(true){
 			depot = depots.get(0);
 			
-			System.out.println("Welcome to the " + depots.toString() + " - eDepotSystem\n");
+			System.out.println("Welcome to the " + (Depot.getLocation() + " - eDepotSystem\n"));
 			System.out.println("Below you will find the menu which shows which services are available on the system\n");
 			System.out.println("Menu:");
 			System.out.println("(1) View Depots by name");
@@ -178,7 +172,7 @@ public class eDepotSystem {
 			
 			switch(inputNumber) {
 				case 1: 
-					getDepotByName();
+					getDepots();
 					break;
 				case 2: 
 					getJobRef();
@@ -205,11 +199,19 @@ public class eDepotSystem {
 		}
 		}
 	
-	private static void getDepotByName() {
-		System.out.println("Enter Depots Name : ");
-		String depotName = scan.nextLine();
+	private static void getDepots() {
+		System.out.println("Here are a list of the Depots within the eDepot System : \n");
+	for(Depot depot : depots) {
+		System.out.println(Depot.getLocation());
+	}
+	
+	}
+	
+	private static void getDepotLocation() {
 		
-		System.out.println(Depot.getDepotByName(depotName).toString());
+		String depotLocation = scan.nextLine();
+		
+		System.out.println(Depot.getDepotByName(depotLocation).toString());
 	}
 	
 	private static void getJobRef() {

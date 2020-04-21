@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Depot implements Serializable {
 
@@ -14,12 +15,13 @@ public class Depot implements Serializable {
 	 */
 	private static final long serialVersionUID = 78777732009961041L;
 	private String depotName;
-	private String Location;
+	private static String Location;
 	private static List<Depot> depots = new ArrayList<Depot>();
 	private List<WorkSchedule> jobs = Collections.synchronizedList(new ArrayList<WorkSchedule>());
 	private List<Driver> drivers = new ArrayList<Driver>();
 	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
+	
 	
 	
 	
@@ -35,6 +37,21 @@ public class Depot implements Serializable {
 	
 	public String getDepotName() {
 		return depotName;
+	}
+	
+	private static void getDepots() {
+		System.out.println("Here are a list of the Depots within the eDepot System : \n");
+	for(Depot depot : depots) {
+		System.out.println(depot.getLocation());
+	}
+	
+	}
+	
+	private static void getDepotLocation() {
+		Scanner scan = new Scanner(System.in );
+		String depotLocation = scan.nextLine();
+		
+		System.out.println(Depot.getDepotByName(depotLocation).toString());
 	}
 	
 	public static Depot getDepotByName(String depotName) {
@@ -111,17 +128,19 @@ public class Depot implements Serializable {
 			
 		}
 		public void add(Depot depot) {
-			// TODO Auto-generated method stub
+			
+			depots.add(new Depot("London"));
+			depots.add(new Depot("Manchester"));
+			depots.add(new Depot("Liverpool"));
 			depots.add(depot);
 		}
-		public Object getLocation() {
-			// TODO Auto-generated method stub
-			return null;
+		public static Object getLocation() {
+			return depots;
 		}
-		public List<Depot> getVehicles() {
-			// TODO Auto-generated method stub
-			return null;
+		public List<Vehicle> getVehicles() {
+			return vehicles;
 		}
+		
 		public void Driver(int driverID, String userName, String password) {
 		}
 		

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 import eDepotSystem.Vehicle;
 import eDepotSystem.Driver;
@@ -24,6 +25,8 @@ private LocalDateTime startDate;
 private LocalDateTime endDate;
 private Status status = Status.PENDING;
 private boolean update = false;
+private static List<Depot> depots = new ArrayList<Depot>();
+
 
  //method construction
 public WorkSchedule(String jobRef, String client, String depotName, Driver driver, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
@@ -109,6 +112,22 @@ public int getDriverID() {
 	return driverID;
 	
 }
+
+private static void getDepots() {
+	System.out.println("Here are a list of the Depots within the eDepot System : \n");
+for(Depot depot : depots) {
+	System.out.println(depot.getLocation());
+}
+
+}
+
+private static void getDepotLocation() {
+	Scanner scan = new Scanner (System.in);
+	String depotLocation = scan.nextLine();
+	
+	System.out.println(Depot.getDepotByName(depotLocation).toString());
+}
+
 public LocalDateTime getJobStartDate(){
 	return startDate;
 }
