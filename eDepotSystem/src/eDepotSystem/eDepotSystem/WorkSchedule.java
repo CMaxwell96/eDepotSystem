@@ -121,11 +121,11 @@ for(Depot depot : depots) {
 
 }
 
-private static void getDepotLocation() {
+private void getDepotLocation() {
 	Scanner scan = new Scanner (System.in);
 	String depotLocation = scan.nextLine();
 	
-	System.out.println(Depot.getDepotByName(depotLocation).toString());
+	System.out.println(Depot.getDepotByLocation(depotLocation).toString());
 }
 
 public LocalDateTime getJobStartDate(){
@@ -146,7 +146,7 @@ public void setUpdate(Boolean update){
 
 public void makeJob(WorkSchedule job) {
 	jobs.add(job);
-	job.getDepotName();
+	job.getDepotLocation();
 	job.getDriverID();
 	job.getRegNo();
 	job.getClient();
@@ -155,7 +155,7 @@ public void makeJob(WorkSchedule job) {
 
 }
 
-public void makeJob(String jobRef, Driver driverID, Vehicle vehicleReg, LocalDateTime jobStartDate) throws Exception {
+public void makeJob(String jobRef, Depot location, Driver driverID, Vehicle vehicleReg, LocalDateTime jobStartDate) throws Exception {
 	
 }
 public WorkSchedule getNextJob() {
