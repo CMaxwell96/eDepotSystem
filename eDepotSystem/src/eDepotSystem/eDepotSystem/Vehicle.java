@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Vehicle implements Scheduleable {
 	
+	public final String SEP = (",");
 	public String make;
 	public String model;
 	public int weight;
@@ -18,6 +19,70 @@ public class Vehicle implements Scheduleable {
 	protected List<WorkSchedule> jobs = new ArrayList<WorkSchedule>();
 	private static List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
+	public Vehicle(String csvString) { // reading the strings into an array
+		String[] csvParts = parseCSV(csvString); // csvString.split(SEP, -1);
+		int i = 0;
+		make = csvParts[i++];
+		model = csvParts[i++];
+		weight = safeParse(csvParts[i++]);
+		RegNo = (csvParts[i++]);
+		update = safeParseBool(csvParts[i++]);
+	}
+
+	public String toVCSVString() { // how the strings will be formatted if all were printed and how they can be
+		// called from the array list
+	return make + SEP + model + SEP
+	+ weight + SEP + RegNo + SEP + update;
+
+	}
+
+		public static String[] parseCSV(String csv) {
+			String[] split = new String[0];
+
+			ArrayList<String> strings = new ArrayList<>();
+			boolean inQuotes = false;
+			String currentString = "";
+			for (char c : csv.toCharArray()) {
+				
+				if (c == '\"') { // switch modes = in quotes or not
+					inQuotes = !inQuotes;
+					continue;
+				}
+				
+				if (!inQuotes && c == ',') { //if a comma, but not in quotes 
+					strings.add(currentString); // add to list of output strings
+					currentString = ""; // blank "current" string
+					continue;
+				}
+							
+				currentString = currentString + c; // concatenate current string
+
+			}
+			strings.add(currentString);
+			
+			split = new String[strings.size()];
+			split = strings.toArray(split);
+
+			return split;
+		}
+
+		public static int safeParse(String str) {
+			try {
+				return Integer.parseInt(str);
+			} catch (Exception e) {
+				return 0;
+			}
+
+		}
+		
+		public static boolean safeParseBool(String update) {
+			try {
+				return Boolean.parseBoolean(update);
+			} catch (Exception e) {
+				return update != null;
+			}
+
+		}
 	
 	public Vehicle (String make,String model, int weight, String RegNo) {
 		this.make = make;

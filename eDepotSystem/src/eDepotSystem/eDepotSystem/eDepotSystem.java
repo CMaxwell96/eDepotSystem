@@ -18,13 +18,14 @@ import eDepotSystem.Driver;
 public class eDepotSystem {
 	private final static String PATH = "C:\\Users\\Caolan\\eclipse-workspace\\eDepotSystem";
 	static Scanner scan = new Scanner(System.in);
+
 	static int inputNumber;
 	private static List<Depot> depots = new ArrayList<Depot>();
 	private static List<WorkSchedule> jobs = new ArrayList<WorkSchedule>();
 	private static List<Driver> drivers = new ArrayList<Driver>();
 	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private static Depot depot;
-	
+	 
 	
 	public static void main(String[] args){
 		//deSerialize();
@@ -38,16 +39,13 @@ public class eDepotSystem {
 				//depot = depots.get(0);
 				
 			//get the current depots location
-				System.out.println("Welcome to the " + (Depot.getLocation() + " - eDepotSystem\n"));
+//				System.out.println("Welcome to the " + Depot.getDepotByLocation(0) + " - eDepotSystem\n");
 				System.out.println("Below you will find the menu which shows which services are available on the system\n");
 				System.out.println("Menu:");
 				System.out.println("(1) View Depots");
 				System.out.println("(2) Create New Job");
 				System.out.println("(3) Reassign Depot");
 				System.out.println("(4) View Schedule");
-//				System.out.println("(2) View Jobs by Ref No.");
-//				System.out.println("(3) View Drivers by ID");
-//				System.out.println("(4) View Vehicles by Reg No.");
 				System.out.println("(5) Create a new Job");
 				System.out.println("(6) View Depots next job ");
 				System.out.println("(Q) Quit ");
@@ -108,40 +106,40 @@ public class eDepotSystem {
 //	}
 	
 	//This method will populate a 3 text files, the first try feature will add a users inputed depot to the depots array.
-	private static void populate() throws FileNotFoundException {
-		try(Scanner scan = new Scanner(new FileReader(PATH + "depots.txt"))){
-		Depot depots = new Depot(scan.nextLine());
-		depots.add(depot);
-		
-		//This try will allow the trucks.txt file to be populated with the trucks information and each of the variable to be split via period.
-		try(Scanner scan2 = new Scanner(new FileReader(PATH + "trucks.txt"))){
-			while (scan2.hasNext()) {
-				String[] splits = scan2.nextLine().split(".");
-				
-				if (splits[0].equals(Depot.getLocation())) {
-					depot.getVehicles().add( new Truck(splits[1], splits[2], Integer.valueOf(splits[3]), splits[4], Integer.valueOf(splits[5])));
-				}
-			}
-		}
-		catch (FileNotFoundException e) {
-			System.out.println(e.getMessage().isEmpty());
-		}
+//	private static void populate() throws FileNotFoundException {
+//		try(Scanner scan = new Scanner(new FileReader(PATH + "depots.txt"))){
+//		Depot depots = new Depot(scan.nextLine());
+//		depots.add(depot);
+//		
+//		//This try will allow the trucks.txt file to be populated with the trucks information and each of the variable to be split via period.
+//		try(Scanner scan2 = new Scanner(new FileReader(PATH + "trucks.txt"))){
+//			while (scan2.hasNext()) {
+//				String[] splits = scan2.nextLine().split(".");
+//				
+//				if (splits[0].equals(Depot.getDepotByLocation(depot))) {
+//					depot.getVehicles().add( new Truck(splits[1], splits[2], Integer.valueOf(splits[3]), splits[4], Integer.valueOf(splits[5])));
+//				}
+//			}
+//		}
+//		catch (FileNotFoundException e) {
+//			System.out.println(e.getMessage().isEmpty());
+//		}
 	//This try will allow the tankers.txt file to be populated with the tankers information and each of the variable to be split via period.
-		try(Scanner scan2 = new Scanner(new FileReader(PATH + "tankers.txt"))){
-			while (scan2.hasNext()) {
-				String[] splits2 = scan2.nextLine().split(".");
-				
-				if (splits2[0].equals(Depot.getLocation())) {
-					depot.getVehicles().add( new Tanker(splits2[1], splits2[2], Integer.valueOf(splits2[3]), splits2[4], Integer.valueOf(splits2[5]), splits2[6]));
-				}
-			}
-		}
-		catch (FileNotFoundException e) {
-			System.out.println(e.getMessage().isEmpty());
-		}
-		}
-		
-	}
+//		try(Scanner scan2 = new Scanner(new FileReader(PATH + "tankers.txt"))){
+//			while (scan2.hasNext()) {
+//				String[] splits2 = scan2.nextLine().split(".");
+//				
+//				if (splits2[0].equals(Depot.getDepotByLocation(depot))) {
+//					depot.getVehicles().add( new Tanker(splits2[1], splits2[2], Integer.valueOf(splits2[3]), splits2[4], Integer.valueOf(splits2[5]), splits2[6]));
+//				}
+//			}
+//		}
+//		catch (FileNotFoundException e) {
+//			System.out.println(e.getMessage().isEmpty());
+//		}
+//		}
+//		
+//	}
 	
 	
 	@SuppressWarnings("unchecked")
@@ -207,14 +205,7 @@ public class eDepotSystem {
 //	}
 
 	
-	//This method will go through each value within the Depot array and output a list of the depot locations
-	private static void getDepots() {
-		System.out.println("Here are a list of the Depots within the eDepot System : \n");
-	for(Depot depot : depots) {
-		System.out.println(Depot.getLocation());
-	}
-	
-	}
+
 	
 	//This method will allow the user to input a depots location, then output the depot location via the Depot array getlocation toString methods
 	private static void getDepotLocation() {
@@ -267,10 +258,15 @@ public class eDepotSystem {
 		LocalDateTime jobStartDate = LocalDateTime.parse(scan.nextLine(), DateTimeFormatter.ofPattern("dd MM yy HH:mm"));
 		
 		WorkSchedule jobs = WorkSchedule.getJobRef(jobRef);
-		Depot depots = Depot.getDepotByLocation(depotLocation);
+		Depot depots = (Depot) Depot.getDepotByLocation(depotLocation);
 		Driver drivers = Driver.getDriverByID(driverID);
 		Vehicle vehicles = Vehicle.getVehicleByRegNo(vehicleReg);
-		depots.makeJob(new WorkSchedule(jobRef, depotLocation, driverID, vehicleReg, jobStartDate));
+		
+		try {
+			depots.makeJob(new WorkSchedule(jobRef, depotLocation, driverID, vehicleReg, jobStartDate));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	
 	}
@@ -280,7 +276,7 @@ public class eDepotSystem {
 		String depotLocation = scan.nextLine();
 	 
 		
-		System.out.println(Depot.getDepotByLocation(depotLocation).getNextJob().getJobStartDate().format(DateTimeFormatter.ofPattern("dd MM yy HH:mm")));
+		System.out.println(((Vehicle) Depot.getDepotByLocation(depotLocation)).getNextJob().getJobStartDate().format(DateTimeFormatter.ofPattern("dd MM yy HH:mm")));
 		
 		
 	}

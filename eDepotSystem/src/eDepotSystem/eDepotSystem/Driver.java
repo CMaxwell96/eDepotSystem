@@ -25,6 +25,49 @@ public class Driver implements Scheduleable {
 		this.password = password;
 	}
 	
+	
+	public static String[] parseCSV(String csv) {
+		String[] split = new String[0];
+
+		ArrayList<String> strings = new ArrayList<>();
+		boolean inQuotes = false;
+		String currentString = "";
+		for (char c : csv.toCharArray()) {
+			
+			if (c == '\"') { // switch modes = in quotes or not
+				inQuotes = !inQuotes;
+				continue;
+			}
+			
+			if (!inQuotes && c == ',') { //if a comma, but not in quotes 
+				strings.add(currentString); // add to list of output strings
+				currentString = ""; // blank "current" string
+				continue;
+			}
+						
+			currentString = currentString + c; // concatenate current string
+
+		}
+		strings.add(currentString);
+		
+		split = new String[strings.size()];
+		split = strings.toArray(split);
+
+		return split;
+	}
+
+	public static int safeParse(String str) {
+		try {
+			return Integer.parseInt(str);
+		} catch (Exception e) {
+			return 0;
+		}
+
+	}
+	
+
+	
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -111,5 +154,7 @@ public class Driver implements Scheduleable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

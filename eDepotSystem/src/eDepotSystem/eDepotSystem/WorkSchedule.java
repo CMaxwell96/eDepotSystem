@@ -14,56 +14,130 @@ public class WorkSchedule {
 
 	private static List<WorkSchedule> jobs = new ArrayList<WorkSchedule>();
 
+	public final String SEP = (",");
 private String jobRef;
 private int driverID;
-private  String depotName;
+private  String depotLocation;
 private String vehicleReg;
 private Vehicle vehicle;
 private Driver driver;
 private String client;
-private LocalDateTime startDate;
-private LocalDateTime endDate;
-private Status status = Status.PENDING;
+private static LocalDateTime startDate;
+private static LocalDateTime endDate;
+private String status;
 private boolean update = false;
 private static List<Depot> depots = new ArrayList<Depot>();
 
+public WorkSchedule(String csvString) { // reading the strings into an array
+	String[] csvParts = parseCSV(csvString); // csvString.split(SEP, -1);
+	int i = 0;
+	jobRef = csvParts[i++];
+	depotLocation = csvParts[i++];
+	driverID = safeParse(csvParts[i++]);
+	startDate = safeParseLDT(csvParts[i++]);
+	endDate = safeParseLDT(csvParts[i++]);
+	status = (csvParts[i++]);
+}
 
- //method construction
-public WorkSchedule(String jobRef, String client, String depotName, Driver driver, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
+public String toWSCSVString() { // how the strings will be formatted if all were printed and how they can be
+	// called from the array list
+return jobRef + SEP + depotLocation + SEP
++ driverID + SEP + startDate + SEP + endDate + SEP + status;
+
+}
+
+	public static String[] parseCSV(String csv) {
+		String[] split = new String[0];
+
+		ArrayList<String> strings = new ArrayList<>();
+		boolean inQuotes = false;
+		String currentString = "";
+		for (char c : csv.toCharArray()) {
+			
+			if (c == '\"') { // switch modes = in quotes or not
+				inQuotes = !inQuotes;
+				continue;
+			}
+			
+			if (!inQuotes && c == ',') { //if a comma, but not in quotes 
+				strings.add(currentString); // add to list of output strings
+				currentString = ""; // blank "current" string
+				continue;
+			}
+						
+			currentString = currentString + c; // concatenate current string
+
+		}
+		strings.add(currentString);
+		
+		split = new String[strings.size()];
+		split = strings.toArray(split);
+
+		return split;
+	}
+
+	public static int safeParse(String str) {
+		try {
+			return Integer.parseInt(str);
+		} catch (Exception e) {
+			return 0;
+		}
+
+	}
+	
+	public static LocalDateTime safeParseLDT(String str) {
+		try {
+			return LocalDateTime.parse(str);
+		} catch (Exception e) {
+			return startDate ;
+		}
+
+	}
+	
+ //method construction for the work schedule array
+public WorkSchedule(String jobRef, String client, String depotLocation, Driver driver, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
 	
 	this.jobRef = jobRef;
 	this.client = client;
-	this.depotName = depotName;
+	this.depotLocation = depotLocation;
 	this.startDate = startDate;
-	this.endDate = startDate;
+	this.endDate = endDate;
 	
 	setVehicle(vehicle);
 	setDriver(driver);
 }
-public WorkSchedule(String jobRef, String client, String depotName, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) throws Exception{
+public WorkSchedule(String jobRef, String client, String depotLocation, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) throws Exception{
 	
 	this.jobRef = jobRef;
 	this.client = client;
-	this.depotName = depotName;
+	this.depotLocation = depotLocation;
 	this.startDate = startDate;
-	this.endDate = startDate;
+	this.endDate = endDate;
 
 	setVehicle(vehicle);
 }
-public WorkSchedule(String jobRef, String client, String depotName, Driver driver, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
+public WorkSchedule(String jobRef, String client, String depotLocation, Driver driver, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
 	
 	this.jobRef = jobRef;
 	this.client = client;
-	this.depotName = depotName;
+	this.depotLocation = depotLocation;
 	this.startDate = startDate;
-	this.endDate = startDate;
+	this.endDate = endDate;
 	
 	setDriver(driver);
 }
 
-public WorkSchedule(String jobRef, String depotName, int driverID, String vehicleReg, LocalDateTime jobStartDate) {
-	// TODO Auto-generated constructor stub
+public WorkSchedule(String jobRef,  String depotLocation, int driverID, String vehicleReg, LocalDateTime startDate) throws Exception {
+	
+	this.jobRef = jobRef;
+	this.depotLocation = depotLocation;
+	this.driverID = driverID;
+	this.vehicleReg = vehicleReg;
+	this.startDate = startDate;
+	
+	
 }
+
 private Driver setDriver(Driver driver2) {
 	return driver;
 }
@@ -91,10 +165,11 @@ public void setEndDate(LocalDateTime endDate) {
 	this.endDate = endDate;
 }
 
+//toString method outputting each value seperated via space
 public String toString(){
 	return this.getClass().getSimpleName() + " >> " +
 			jobRef + " " +
-			depotName + " " +
+			depotLocation + " " +
 			driverID + " " +
 			vehicleReg + " " +
 			client.toString()+" " +
@@ -105,7 +180,7 @@ public String getRegNo() {
 	
 }
 public String getDepotName() {
-	return depotName;
+	return depotLocation;
 }
 
 public int getDriverID() {
@@ -113,13 +188,13 @@ public int getDriverID() {
 	
 }
 
-private static void getDepots() {
-	System.out.println("Here are a list of the Depots within the eDepot System : \n");
-for(Depot depot : depots) {
-	System.out.println(depot.getLocation());
-}
-
-}
+//private static void getDepots() {
+//	System.out.println("Here are a list of the Depots within the eDepot System : \n");
+//for(Depot depot : depots) {
+//	System.out.println(depot.getLocation());
+//}
+//
+//}
 
 private void getDepotLocation() {
 	Scanner scan = new Scanner (System.in);
