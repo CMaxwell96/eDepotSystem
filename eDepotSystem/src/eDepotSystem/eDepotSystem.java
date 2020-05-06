@@ -28,7 +28,7 @@ public class eDepotSystem {
 		System.out.println("Please select what option you would want from the Menu below by typing the number to the left of it\n");
 		System.out.println("(1) Display work Schedule");
 		System.out.println("(2) Setup work Schedule");
-		System.out.println("(3) Move Vehicle");
+		System.out.println("(3) Reassign Depot");
 		System.out.println("(Q) Quit");
 		
 		 String choice = null;
@@ -98,6 +98,7 @@ public class eDepotSystem {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         for (WorkSchedule user : listOfUsers){
         	System.out.println("Client: " + user.getClient() + " Start Date: " + user.getStartDate()  + " End Date: " + user.getEndDate());
         	
